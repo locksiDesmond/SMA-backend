@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const app = express();
 const dotenv = require("dotenv").config();
+const Joi = require("@hapi/joi");
 const PORT = process.env.PORT;
 var corsOptions = {
   origin: "http://localhost:3000",
@@ -17,6 +18,54 @@ app.get("/", (req, res) => {
 });
 app.post("/", (req, res) => {
   const body = req.body;
-  res.json({ body });
+  const schema = Joi.object({
+    parentName: Joi.object({
+      firstname: Joi.string().required(),
+      lastname: Joi.string().required(),
+    }),
+    email: Joi.string().email().required(),
+    studentName: Joi.object({
+      firstname: Joi.string().required(),
+      lastname: Joi.string().required(),
+    }),
+    phoneNumber: Joi.number().required(),
+    address: Joi.object({
+      address: Joi.string().required(),
+      city: Joi.string().required(),
+    }),
+  });
+  const { error } = schema.validate(body);
+  if (error) {
+    res.json({ error });
+  } else {
+    res.json({ authorized: true });
+  }
+});
+app.post("/done", (req, res) => {
+  const schema = Joi.object({
+    level: Joi.string().required(),
+    department: Joi.string(),
+    subjects: Joi.array().required(),
+    parentName: Joi.object({
+      firstname: Joi.string().required(),
+      lastname: Joi.string().required(),
+    }),
+    email: Joi.string().email().required(),
+    studentName: Joi.object({
+      firstname: Joi.string().required(),
+      lastname: Joi.string().required(),
+    }),
+    phoneNumber: Joi.number().required(),
+    address: Joi.object({
+      address: Joi.string().required(),
+      city: Joi.string().required(),
+    }),
+  });
+  const { error } = schema.validate(req.body);
+  if (error) {
+    res.json({ error });
+  } else {
+    res.json({ message: "completed" });
+  }
 });
 app.listen(PORT, () => console.log(`listening on port ${PORT}`));
