@@ -6,12 +6,20 @@ const Joi = require("@hapi/joi");
 const PORT = process.env.PORT;
 const connection = require("./database/connection");
 const Student = require("./database/model/Student");
-var corsOptions = {
-  origin: "http://localhost:3000",
-  optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
-};
+// var corsOptions = {
+//   origin: "http://localhost:3000",
+//   optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+// };
 // app.use(cors(corsOptions));
 
+app.use(function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  next();
+});
 app.use(express.json());
 app.get("/", (req, res) => {
   res.send(
@@ -67,7 +75,7 @@ app.post("/done", (req, res) => {
   if (error) {
     res.json({ error });
   } else {
-    Student.create(req.body, (err, data) => {
+    Student.create(body, (err, data) => {
       if (err) throw err;
       if (data) {
         res.json({ message: "completed" });
