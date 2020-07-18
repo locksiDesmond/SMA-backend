@@ -1,26 +1,17 @@
 const express = require("express");
-// const cors = require("cors");
 const app = express();
 const dotenv = require("dotenv").config();
 const Joi = require("@hapi/joi");
 const PORT = process.env.PORT;
-const connection = require("./database/connection");
-const Student = require("./database/model/Student");
+// const connection = require("./database/connection");
+// const Student = require("./database/model/Student");
 var corsOptions = {
   origin: "http://localhost:3000",
   optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
 };
-app.use(cors(corsOptions));
 
-// app.use(function (req, res, next) {
-//   res.header("Access-Control-Allow-Origin", "*");
-//   res.header(
-//     "Access-Control-Allow-Headers",
-//     "Origin, X-Requested-With, Content-Type, Accept"
-//   );
-//   next();
-// });
 app.use(express.json());
+app.use(cors(corsOptions));
 app.get("/", (req, res) => {
   res.send(
     "Hello world, this is the home page of SMA. you should send a post request to '/' with your data "
