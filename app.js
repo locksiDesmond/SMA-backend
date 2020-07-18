@@ -11,8 +11,8 @@ var corsOptions = {
   optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
 };
 
-app.use(express.json());
 app.use(cors(corsOptions));
+app.use(express.json());
 app.get("/", (req, res) => {
   res.send(
     "Hello world, this is the home page of SMA. you should send a post request to '/' with your data "
