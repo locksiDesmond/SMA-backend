@@ -13,6 +13,8 @@ var corsOptions = {
 
 app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+
 app.get("/", (req, res) => {
   res.send(
     "Hello world, this is the home page of SMA. you should send a post request to '/' with your data "
@@ -69,7 +71,7 @@ app.post("/done", async (req, res) => {
     res.json({ error });
   } else {
     await Student.create(req.body, (err, data) => {
-      if (err) throw err;
+      if (err) res.send(err);
       console.log(data);
       res.json({ message: "completed" });
     });
@@ -83,5 +85,12 @@ app.get("/students", (req, res) => {
       res.json({ data });
     }
   });
+});
+app.use((req, res, next) => {
+  res.json("page not found");
+});
+app.use((err, req, res, next) => {
+  console.log(err);
+  res.json(err);
 });
 app.listen(PORT, () => console.log(`listening on port ${PORT}`));
