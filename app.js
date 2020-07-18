@@ -4,8 +4,8 @@ const dotenv = require("dotenv").config();
 const Joi = require("@hapi/joi");
 const cors = require("cors");
 const PORT = process.env.PORT;
-// const connection = require("./database/connection");
-// const Student = require("./database/model/Student");
+const connection = require("./database/connection");
+const Student = require("./database/model/Student");
 var corsOptions = {
   origin: "http://localhost:3000",
   optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
