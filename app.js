@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const dotenv = require("dotenv").config();
 const Joi = require("@hapi/joi");
+const cors = require("cors");
 const PORT = process.env.PORT;
 // const connection = require("./database/connection");
 // const Student = require("./database/model/Student");
