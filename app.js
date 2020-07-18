@@ -38,12 +38,13 @@ app.post("/", (req, res) => {
   });
   const { error } = schema.validate(body);
   if (error) {
+    console.log("error");
     res.json({ error });
   } else {
     res.json({ authorized: true });
   }
 });
-app.post("/done", (req, res) => {
+app.post("/done", async (req, res) => {
   const schema = Joi.object({
     level: Joi.string().required(),
     department: Joi.string(),
@@ -67,9 +68,10 @@ app.post("/done", (req, res) => {
   if (error) {
     res.json({ error });
   } else {
-    Student.create(req.body, (err, data) => {
+    await Student.create(req.body, (err, data) => {
       if (err) throw err;
       if (data) {
+        console.log(data);
         res.json({ message: "completed" });
       }
     });
