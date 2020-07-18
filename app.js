@@ -4,6 +4,8 @@ const app = express();
 const dotenv = require("dotenv").config();
 const Joi = require("@hapi/joi");
 const PORT = process.env.PORT;
+const connection = require("./database/connection");
+const Student = require("./database/model/Student");
 var corsOptions = {
   origin: "http://localhost:3000",
   optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
@@ -65,7 +67,20 @@ app.post("/done", (req, res) => {
   if (error) {
     res.json({ error });
   } else {
-    res.json({ message: "completed" });
+    Student.create(req.body, (err, data) => {
+      if (err) throw err;
+      if (data) {
+        res.json({ message: "completed" });
+      }
+    });
   }
+});
+app.get("/students", (req, res) => {
+  Student.find({}, (err, data) => {
+    if (err) throw err;
+    if (data) {
+      res.json({ data });
+    }
+  });
 });
 app.listen(PORT, () => console.log(`listening on port ${PORT}`));
