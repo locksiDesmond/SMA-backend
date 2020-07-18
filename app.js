@@ -67,7 +67,7 @@ app.post("/done", (req, res) => {
   if (error) {
     res.json({ error });
   } else {
-    Student.create(body, (err, data) => {
+    Student.create(req.body, (err, data) => {
       if (err) throw err;
       if (data) {
         res.json({ message: "completed" });
