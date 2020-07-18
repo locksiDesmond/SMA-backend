@@ -70,12 +70,11 @@ app.post("/done", async (req, res) => {
   if (error) {
     res.json({ error });
   } else {
-    await Student.create(req.body, (err, data) => {
-      if (err) res.send(err);
+    await Student.create({ ...req.body }, (err, data) => {
+      if (err) res.json({ err });
       console.log(data);
       res.json({ message: "completed" });
     });
-    // res.json({ url: process.env.URI });
   }
 });
 app.get("/students", (req, res) => {
