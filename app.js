@@ -46,7 +46,7 @@ app.post("/", (req, res) => {
     res.json({ authorized: true });
   }
 });
-app.post("/done", async (req, res) => {
+app.post("/create", async (req, res) => {
   const schema = Joi.object({
     level: Joi.string().required(),
     department: Joi.string(),
@@ -73,7 +73,7 @@ app.post("/done", async (req, res) => {
     await Student.create({ ...req.body }, (err, data) => {
       if (err) res.json({ err });
       console.log(data);
-      res.json({ message: "completed" });
+      res.json({ message: "student registered" });
     });
   }
 });

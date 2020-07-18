@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const { date, array } = require("@hapi/joi");
 const Schema = mongoose.Schema;
 const Student = new Schema({
   date: { type: Date, default: Date.now() },
