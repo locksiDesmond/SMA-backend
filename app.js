@@ -68,14 +68,12 @@ app.post("/done", async (req, res) => {
   if (error) {
     res.json({ error });
   } else {
-    // await Student.create(req.body, (err, data) => {
-    //   if (err) throw err;
-    //   if (data) {
-    //     console.log(data);
-    //     res.json({ message: "completed" });
-    //   }
-    // });
-    res.send("bastard");
+    await Student.create(req.body, (err, data) => {
+      if (err) throw err;
+      console.log(data);
+      res.json({ message: "completed" });
+    });
+    // res.send("bastard");
   }
 });
 app.get("/students", (req, res) => {
